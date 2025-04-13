@@ -173,7 +173,7 @@ export default function Dashboard() {
           </FormControl>
 
           <Link href="/sistema/Agendar">
-            <Button variant="contained" startIcon={<Schedule />}>
+            <Button href="/sistema/Agendar" variant="contained" startIcon={<Schedule />}>
               Nova Consulta
             </Button>
           </Link>

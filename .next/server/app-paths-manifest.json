@@ -1,0 +1,6 @@
+{
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/login/Entrar/page": "app/login/Entrar/page.js",
+  "/sistema/Agendar/page": "app/sistema/Agendar/page.js",
+  "/sistema/Inicio/page": "app/sistema/Inicio/page.js"
+}

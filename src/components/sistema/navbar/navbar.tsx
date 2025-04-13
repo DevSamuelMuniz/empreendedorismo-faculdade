@@ -19,32 +19,53 @@ export default function Navbar() {
       </div>
 
       <ul className="flex flex-col text-lg text-blue-500 font-semibold gap-4 pt-8 px-4">
-        <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
-          <HomeIcon /> Início
-        </li>
-        <a href="/sistema/Agendar">
+        <a href="/sistema/Inicio">
           <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
-            <EventAvailableIcon /> Agendar
+            <HomeIcon /> Início
           </li>
         </a>
-        <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
-          <AssignmentIcon /> Consultas
-        </li>
-        <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
-          <LocalPharmacyIcon /> Receitas
-        </li>
-        <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
-          <CreditCardIcon /> Carteirinha
-        </li>
-        <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
-          <HistoryIcon /> Histórico
-        </li>
-        <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
-          <BiotechIcon /> Exames
-        </li>
-        <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
-          <NotificationsIcon /> Notificações
-        </li>
+
+        <a href="/sistema/Agendar">
+          <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
+            <EventAvailableIcon /> Agendamento
+          </li>
+        </a>
+
+        <a href="/sistema/Agendar">
+          <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
+            <AssignmentIcon /> Consultas
+          </li>
+        </a>
+
+        <a href="/sistema/Agendar">
+          <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
+            <LocalPharmacyIcon /> Receitas
+          </li>
+        </a>
+
+        <a href="/sistema/Agendar">
+          <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
+            <CreditCardIcon /> Carteirinha
+          </li>
+        </a>
+
+        <a href="/sistema/Agendar">
+          <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
+            <HistoryIcon /> Histórico
+          </li>
+        </a>
+
+        <a href="/sistema/Agendar">
+          <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
+            <BiotechIcon /> Exames
+          </li>
+        </a>
+
+        <a href="/sistema/Agendar">
+          <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
+            <NotificationsIcon /> Notificações
+          </li>
+        </a>
       </ul>
     </main>
   );

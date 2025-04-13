@@ -1,6 +1,10 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
   "/login/Entrar/page": "app/login/Entrar/page.js",
+  "/sistema/Agendamento/page": "app/sistema/Agendamento/page.js",
   "/sistema/Agendar/page": "app/sistema/Agendar/page.js",
+  "/sistema/Consultas/page": "app/sistema/Consultas/page.js",
+  "/sistema/Historico/page": "app/sistema/Historico/page.js",
   "/sistema/Inicio/page": "app/sistema/Inicio/page.js"
 }

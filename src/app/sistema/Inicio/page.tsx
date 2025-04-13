@@ -20,7 +20,6 @@ import {
   ListItemText,
   Divider,
   Stack,
-  Container,
   Paper,
 } from "@mui/material";
 
@@ -91,7 +90,7 @@ export default function Dashboard() {
           gutterBottom
         >
           <MedicalServicesIcon className="text-red-400" /> Olá, bem-vindo ao seu
-          painel de paciente
+          espaço
         </Typography>
 
         {/* Consultas disponíveis */}
@@ -172,8 +171,8 @@ export default function Dashboard() {
             </Select>
           </FormControl>
 
-          <Link href="/sistema/Agendar">
-            <Button href="/sistema/Agendar" variant="contained" startIcon={<Schedule />}>
+          <Link href="/sistema/Agendamento">
+            <Button variant="contained" startIcon={<Schedule />}>
               Nova Consulta
             </Button>
           </Link>

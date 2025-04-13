@@ -8,7 +8,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import LocalPharmacyIcon from "@mui/icons-material/LocalPharmacy";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import HistoryIcon from "@mui/icons-material/History";
-import BiotechIcon from "@mui/icons-material/Biotech";
+import PersonIcon from "@mui/icons-material/Person";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 
 export default function Navbar() {
@@ -18,55 +18,43 @@ export default function Navbar() {
         <Image className="w-30" src={Logo} alt="logo" />
       </div>
 
-      <ul className="flex flex-col text-lg text-blue-500 font-semibold gap-4 pt-8 px-4">
-        <a href="/sistema/Inicio">
-          <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
-            <HomeIcon /> Início
-          </li>
-        </a>
+      <div>
+        <ul className="flex flex-col text-lg text-blue-500 font-semibold gap-4 pt-8 px-4">
+          <a href="/sistema/Inicio">
+            <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
+              <HomeIcon /> Início
+            </li>
+          </a>
 
-        <a href="/sistema/Agendar">
-          <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
-            <EventAvailableIcon /> Agendamento
-          </li>
-        </a>
+          <a href="/sistema/Agendamento">
+            <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
+              <EventAvailableIcon /> Agendamento
+            </li>
+          </a>
 
-        <a href="/sistema/Agendar">
-          <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
-            <AssignmentIcon /> Consultas
-          </li>
-        </a>
+          <a href="/sistema/Consultas">
+            <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
+              <AssignmentIcon /> Consultas
+            </li>
+          </a>
 
-        <a href="/sistema/Agendar">
-          <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
-            <LocalPharmacyIcon /> Receitas
-          </li>
-        </a>
+          <a href="/sistema/Historico">
+            <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
+              <HistoryIcon /> Histórico
+            </li>
+          </a>
+        </ul>
+      </div>
 
-        <a href="/sistema/Agendar">
-          <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
-            <CreditCardIcon /> Carteirinha
-          </li>
-        </a>
-
-        <a href="/sistema/Agendar">
-          <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
-            <HistoryIcon /> Histórico
-          </li>
-        </a>
-
-        <a href="/sistema/Agendar">
-          <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
-            <BiotechIcon /> Exames
-          </li>
-        </a>
-
-        <a href="/sistema/Agendar">
-          <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
-            <NotificationsIcon /> Notificações
-          </li>
-        </a>
-      </ul>
+      <div>
+        <ul className="flex flex-col text-lg text-blue-500 font-semibold gap-4 pt-12 px-4">
+          <a href="/sistema/Perfil">
+            <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
+              <PersonIcon /> Meus dados
+            </li>
+          </a>
+        </ul>
+      </div>
     </main>
   );
 }

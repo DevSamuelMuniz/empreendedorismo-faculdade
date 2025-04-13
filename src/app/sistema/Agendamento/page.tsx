@@ -60,8 +60,13 @@ export default function AgendarConsulta() {
   ];
 
   const [hospitalSelecionado, setHospitalSelecionado] = useState(null);
-  const [tipoSelecionado, setTipoSelecionado] = useState(null);
-  const [medicoSelecionado, setMedicoSelecionado] = useState(null);
+  const [tipoSelecionado, setTipoSelecionado] = useState<any>(null);
+  const [medicoSelecionado, setMedicoSelecionado] = useState<{
+    nome: string;
+    especialidade: string;
+    crm: string;
+  } | null>(null);
+
   const [data, setData] = useState(null);
   const [hora, setHora] = useState(null);
   const [sucesso, setSucesso] = useState(false);
@@ -94,7 +99,7 @@ export default function AgendarConsulta() {
           <Autocomplete
             options={hospitalList}
             getOptionLabel={(option) => option.nome}
-            onChange={(e, value) => setHospitalSelecionado(value)}
+            onChange={(e, value: any) => setHospitalSelecionado(value)}
             renderInput={(params) => (
               <TextField {...params} label="Selecione o hospital" fullWidth />
             )}
@@ -105,7 +110,7 @@ export default function AgendarConsulta() {
           Tipo de Atendimento
         </Typography>
         <Stack direction="row" spacing={2} flexWrap="wrap" mb={4}>
-          {tipos.map((tipo) => (
+          {tipos.map((tipo: any) => (
             <Card
               key={tipo.id}
               onClick={() => setTipoSelecionado(tipo)}
@@ -131,7 +136,7 @@ export default function AgendarConsulta() {
               Selecione o Médico
             </Typography>
             <Stack direction="row" spacing={2} flexWrap="wrap">
-              {medicos.map((medico, index) => (
+              {medicos.map((medico: any, index) => (
                 <Card
                   key={index}
                   onClick={() => setMedicoSelecionado(medico)}
@@ -162,12 +167,12 @@ export default function AgendarConsulta() {
           <DatePicker
             label="Escolha a data"
             value={data}
-            onChange={(novaData) => setData(novaData)}
+            onChange={(novaData: any) => setData(novaData)}
           />
           <TimePicker
             label="Horário"
             value={hora}
-            onChange={(novaHora) => setHora(novaHora)}
+            onChange={(novaHora: any) => setHora(novaHora)}
           />
         </Box>
 

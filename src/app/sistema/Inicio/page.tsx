@@ -65,15 +65,14 @@ export default function Dashboard() {
   const [consultas, setConsultas] = useState(consultasMock);
   const [filtroStatus, setFiltroStatus] = useState("Todos");
 
-  const filtrarConsultas = () => {
-    if (filtroStatus === "Todos") return consultasMock;
-    return consultasMock.filter((c) => c.status === filtroStatus);
-  };
-
   useEffect(() => {
-    setConsultas(filtrarConsultas());
+    if (filtroStatus === "Todos") {
+      setConsultas(consultasMock);
+    } else {
+      setConsultas(consultasMock.filter((c) => c.status === filtroStatus));
+    }
   }, [filtroStatus]);
-
+  
   return (
     <main className="min-h-screen bg-gray-100">
       <div className="flex w-full absolute">

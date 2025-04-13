@@ -5,11 +5,8 @@ import Logo from "@/assets/imgs/logo.png";
 import HomeIcon from "@mui/icons-material/Home";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import LocalPharmacyIcon from "@mui/icons-material/LocalPharmacy";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
 import HistoryIcon from "@mui/icons-material/History";
 import PersonIcon from "@mui/icons-material/Person";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 
 export default function Navbar() {
   return (

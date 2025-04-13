@@ -1,4 +1,7 @@
 "use client";
+
+import { useEffect, useState } from "react";
+
 //components
 import Header from "@/components/sistema/header/header";
 import Navbar from "@/components/sistema/navbar/navbar";
@@ -20,8 +23,6 @@ import {
   Button,
 } from "@mui/material";
 import { Schedule } from "@mui/icons-material";
-
-import { useEffect, useState } from "react";
 
 const consultasMock = [
   {
@@ -47,20 +48,17 @@ const consultasMock = [
   },
 ];
 
-
 export default function Consultas() {
   const [consultas, setConsultas] = useState(consultasMock);
   const [filtroStatus, setFiltroStatus] = useState("Todos");
-
-  const filtrarConsultas = () => {
-    if (filtroStatus === "Todos") return consultasMock;
-    return consultasMock.filter((c) => c.status === filtroStatus);
-  };
-
   useEffect(() => {
-    setConsultas(filtrarConsultas());
+    if (filtroStatus === "Todos") {
+      setConsultas(consultasMock);
+    } else {
+      setConsultas(consultasMock.filter((c) => c.status === filtroStatus));
+    }
   }, [filtroStatus]);
-
+  
   return (
     <main className="min-h-screen bg-gray-100">
       <div className="flex w-full absolute">

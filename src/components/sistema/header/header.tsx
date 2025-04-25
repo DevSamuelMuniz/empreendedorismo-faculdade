@@ -21,7 +21,7 @@ export default function Header() {
 
   const notifications = [
     {
-      title: "Consulta com Dr. João confirmada",
+      title: "Consulta com Dr. João Realizada",
       time: "10/04/2025 - 14:00",
     },
     {

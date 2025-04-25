@@ -28,7 +28,7 @@ const consultasMock = [
     paciente: "Maria Oliveira",
     data: "2025-04-11",
     hora: "09:30",
-    status: "Confirmada",
+    status: "Realizada",
   },
   {
     id: 3,

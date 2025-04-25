@@ -37,7 +37,7 @@ const consultasMock = [
     paciente: "Maria Oliveira",
     data: "2025-04-11",
     hora: "09:30",
-    status: "Confirmada",
+    status: "Realizada",
   },
   {
     id: 3,
@@ -88,7 +88,7 @@ export default function Consultas() {
             >
               <MenuItem value="Todos">Todos</MenuItem>
               <MenuItem value="Agendada">Agendada</MenuItem>
-              <MenuItem value="Confirmada">Confirmada</MenuItem>
+              <MenuItem value="Realizada">Realizada</MenuItem>
               <MenuItem value="Cancelada">Cancelada</MenuItem>
             </Select>
           </FormControl>
@@ -121,7 +121,7 @@ export default function Consultas() {
                   label={consulta.status}
                   className="mt-2"
                   color={
-                    consulta.status === "Confirmada"
+                    consulta.status === "Realizada"
                       ? "success"
                       : consulta.status === "Cancelada"
                       ? "error"

@@ -32,21 +32,40 @@ import { Schedule } from "@mui/icons-material";
 const consultasMock = [
   {
     id: 1,
-    paciente: "João da Silva",
+    profissionalSaude: "João da Silva",
+    hospital: "UPA Lagoa Encantada" ,
     data: "2025-04-10",
     hora: "14:00",
     status: "Agendada",
   },
   {
     id: 2,
-    paciente: "Maria Oliveira",
+    profissionalSaude: "Maria Oliveira",
+    hospital: "UPA Lagoa Encantada" ,
     data: "2025-04-11",
     hora: "09:30",
-    status: "Confirmada",
+    status: "Realizada",
   },
   {
     id: 3,
-    paciente: "Carlos Lima",
+    profissionalSaude: "Carlos Lima",
+    hospital: "UPA Lagoa Encantada" ,
+    data: "2025-04-12",
+    hora: "16:00",
+    status: "Cancelada",
+  },
+  {
+    id: 4,
+    profissionalSaude: "Carlos Lima",
+    hospital: "UPA Lagoa Encantada" ,
+    data: "2025-04-12",
+    hora: "16:00",
+    status: "Cancelada",
+  },
+  {
+    id: 5,
+    profissionalSaude: "Carlos Lima",
+    hospital: "UPA Lagoa Encantada" ,
     data: "2025-04-12",
     hora: "16:00",
     status: "Cancelada",
@@ -129,7 +148,7 @@ export default function Dashboard() {
             className="flex-1"
           >
             <CardContent>
-              <Typography variant="h6">Consultas Confirmadas</Typography>
+              <Typography variant="h6">Consultas Realizadas</Typography>
               <Typography variant="h4" color="secondary">
                 6
               </Typography>
@@ -165,7 +184,7 @@ export default function Dashboard() {
             >
               <MenuItem value="Todos">Todos</MenuItem>
               <MenuItem value="Agendada">Agendada</MenuItem>
-              <MenuItem value="Confirmada">Confirmada</MenuItem>
+              <MenuItem value="Realizada">Realizada</MenuItem>
               <MenuItem value="Cancelada">Cancelada</MenuItem>
             </Select>
           </FormControl>
@@ -190,7 +209,7 @@ export default function Dashboard() {
             >
               <CardContent>
                 <Typography variant="subtitle1" fontWeight="bold">
-                  {consulta.paciente}
+                  {consulta.profissionalSaude}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   {consulta.data} às {consulta.hora}
@@ -199,7 +218,7 @@ export default function Dashboard() {
                   label={consulta.status}
                   className="mt-2"
                   color={
-                    consulta.status === "Confirmada"
+                    consulta.status === "Realizada"
                       ? "success"
                       : consulta.status === "Cancelada"
                       ? "error"
@@ -221,7 +240,7 @@ export default function Dashboard() {
               <React.Fragment key={c.id}>
                 <ListItem>
                   <ListItemText
-                    primary={`${c.paciente} - ${c.data} às ${c.hora}`}
+                    primary={`${c.profissionalSaude} - ${c.data} às ${c.hora}`}
                     secondary={`Status: ${c.status}`}
                   />
                 </ListItem>

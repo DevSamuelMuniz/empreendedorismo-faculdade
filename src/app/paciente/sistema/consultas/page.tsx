@@ -166,7 +166,7 @@ export default function Consultas() {
                       startIcon={<Cancel />}
                       onClick={() => handleOpenModal(consulta)}
                     >
-                      Cancelar consulta
+                      Solicitar cancelamento
                     </Button>
                   )}
                 </Box>

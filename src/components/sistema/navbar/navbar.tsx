@@ -17,25 +17,25 @@ export default function Navbar() {
 
       <div>
         <ul className="flex flex-col text-lg text-blue-500 font-semibold gap-4 pt-8 px-4">
-          <a href="/sistema/Inicio">
+          <a href="/paciente/sistema/inicio">
             <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
               <HomeIcon /> Início
             </li>
           </a>
 
-          <a href="/sistema/Agendamento">
+          <a href="/paciente/sistema/agendamento">
             <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
               <EventAvailableIcon /> Agendamento
             </li>
           </a>
 
-          <a href="/sistema/Consultas">
+          <a href="/paciente/sistema/consultas">
             <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
               <AssignmentIcon /> Consultas
             </li>
           </a>
 
-          <a href="/sistema/Historico">
+          <a href="/paciente/sistema/historico">
             <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
               <HistoryIcon /> Histórico
             </li>
@@ -45,7 +45,7 @@ export default function Navbar() {
 
       <div>
         <ul className="flex flex-col text-lg text-blue-500 font-semibold gap-4 pt-12 px-4">
-          <a href="/sistema/Perfil">
+          <a href="/paciente/sistema/perfil">
             <li className="bg-white cursor-pointer p-2 flex items-center gap-3 rounded hover:bg-blue-100 transition">
               <PersonIcon /> Meus dados
             </li>

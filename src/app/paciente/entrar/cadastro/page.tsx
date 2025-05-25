@@ -71,7 +71,7 @@ export default function Cadastro() {
           {/* Link para a tela de login */}
           <p className="text-center text-sm text-gray-500 mt-3">
             Já tem uma conta?
-            <a href="/login/Entrar" className="ml-2 text-blue-600 hover:underline">
+            <a href="/paciente/entrar/login" className="ml-2 text-blue-600 hover:underline">
               Faça login
             </a>
           </p>

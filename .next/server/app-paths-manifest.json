@@ -1,11 +1,7 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/login/Cadastro/page": "app/login/Cadastro/page.js",
-  "/login/Entrar/page": "app/login/Entrar/page.js",
-  "/page": "app/page.js",
-  "/sistema/Agendamento/page": "app/sistema/Agendamento/page.js",
-  "/sistema/Consultas/page": "app/sistema/Consultas/page.js",
-  "/sistema/Historico/page": "app/sistema/Historico/page.js",
-  "/sistema/Inicio/page": "app/sistema/Inicio/page.js"
+  "/paciente/entrar/cadastro/page": "app/paciente/entrar/cadastro/page.js",
+  "/paciente/entrar/login/page": "app/paciente/entrar/login/page.js",
+  "/paciente/sistema/inicio/page": "app/paciente/sistema/inicio/page.js",
+  "/page": "app/page.js"
 }

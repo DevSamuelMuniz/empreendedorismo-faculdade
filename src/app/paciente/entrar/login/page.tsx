@@ -9,7 +9,7 @@ export default function Login() {
 
   function handleLogin(event: React.FormEvent) {
     event.preventDefault();
-    router.push("/sistema/Inicio");
+    router.push("/paciente/sistema/inicio");
   }
 
   return (
@@ -70,7 +70,7 @@ export default function Login() {
           <p className="text-center text-sm text-gray-500 mt-3">
             Ainda não tem uma conta?
             <a
-              href="/login/Cadastro"
+              href="/paciente/entrar/cadastro"
               className="ml-2 text-blue-600 hover:underline"
             >
               Criar uma conta

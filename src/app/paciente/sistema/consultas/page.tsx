@@ -21,8 +21,13 @@ import {
   InputLabel,
   Link,
   Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from "@mui/material";
-import { Schedule } from "@mui/icons-material";
+import { Schedule, Cancel } from "@mui/icons-material";
 
 const consultasMock = [
   {
@@ -51,6 +56,9 @@ const consultasMock = [
 export default function Consultas() {
   const [consultas, setConsultas] = useState(consultasMock);
   const [filtroStatus, setFiltroStatus] = useState("Todos");
+  const [openModal, setOpenModal] = useState(false);
+  const [consultaSelecionada, setConsultaSelecionada] = useState(null);
+
   useEffect(() => {
     if (filtroStatus === "Todos") {
       setConsultas(consultasMock);
@@ -58,7 +66,26 @@ export default function Consultas() {
       setConsultas(consultasMock.filter((c) => c.status === filtroStatus));
     }
   }, [filtroStatus]);
-  
+
+  const handleOpenModal = (consulta: any) => {
+    setConsultaSelecionada(consulta);
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setConsultaSelecionada(null);
+  };
+
+  const confirmarCancelamento = () => {
+    if (!consultaSelecionada) return;
+    const atualizadas = consultas.map((c) =>
+      c.id === consultaSelecionada.id ? { ...c, status: "Cancelada" } : c
+    );
+    setConsultas(atualizadas);
+    handleCloseModal();
+  };
+
   return (
     <main className="min-h-screen bg-gray-100">
       <div className="flex w-full absolute">
@@ -111,28 +138,62 @@ export default function Consultas() {
               transition={{ duration: 0.4 }}
             >
               <CardContent>
-                <Typography variant="subtitle1" fontWeight="bold">
-                  {consulta.paciente}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {consulta.data} às {consulta.hora}
-                </Typography>
-                <Chip
-                  label={consulta.status}
-                  className="mt-2"
-                  color={
-                    consulta.status === "Realizada"
-                      ? "success"
-                      : consulta.status === "Cancelada"
-                      ? "error"
-                      : "warning"
-                  }
-                />
+                <Box className="flex justify-between items-center flex-wrap gap-2">
+                  <Box>
+                    <Typography variant="subtitle1" fontWeight="bold">
+                      {consulta.paciente}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {consulta.data} às {consulta.hora}
+                    </Typography>
+                    <Chip
+                      label={consulta.status}
+                      className="mt-2"
+                      color={
+                        consulta.status === "Realizada"
+                          ? "success"
+                          : consulta.status === "Cancelada"
+                          ? "error"
+                          : "warning"
+                      }
+                    />
+                  </Box>
+
+                  {consulta.status === "Agendada" && (
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      startIcon={<Cancel />}
+                      onClick={() => handleOpenModal(consulta)}
+                    >
+                      Cancelar consulta
+                    </Button>
+                  )}
+                </Box>
               </CardContent>
             </Card>
           ))}
         </Stack>
       </Box>
+
+      {/* Modal de confirmação */}
+      <Dialog open={openModal} onClose={handleCloseModal}>
+        <DialogTitle>Cancelar Consulta</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Tem certeza que deseja cancelar a consulta com
+            <strong>{consultaSelecionada?.paciente}</strong> no dia
+            <strong>{consultaSelecionada?.data}</strong> às
+            <strong>{consultaSelecionada?.hora}</strong>?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseModal}>Voltar</Button>
+          <Button onClick={confirmarCancelamento} color="error" variant="contained">
+            Confirmar Cancelamento
+          </Button>
+        </DialogActions>
+      </Dialog>
     </main>
   );
 }

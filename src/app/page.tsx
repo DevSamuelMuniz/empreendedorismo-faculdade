@@ -18,14 +18,14 @@ export default function Home() {
       route: "/paciente/entrar/login",
     },
     {
-      label: "Médico",
+      label: "Profissional",
       image: Medico,
-      route: "/medico/entrar/login",
+      route: "/profissional/entrar/login",
     },
     {
       label: "Administrador",
       image: Admin,
-      route: "/admin/entrar/login",
+      route: "/administrador/entrar/login",
     },
   ];
 

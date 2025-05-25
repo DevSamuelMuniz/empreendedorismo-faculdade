@@ -4,11 +4,11 @@ import Logo from "@/assets/imgs/logo.png";
 export default function Cadastro() {
   return (
     <main className="flex h-screen w-screen">
+      
+
       {/* Lado esquerdo - Formulário */}
       <div className="w-full md:w-1/2 flex flex-col justify-center items-center px-6">
-        <h2 className="text-3xl font-bold text-blue-600 mb-6">
-          Crie sua conta
-        </h2>
+        <h2 className="text-3xl font-bold text-blue-600 mb-6">Crie sua conta</h2>
         <p className="text-gray-600 mb-4">Cadastre-se para acessar o sistema</p>
 
         <form className="w-full max-w-sm bg-white p-6 rounded-lg shadow-md">
@@ -71,10 +71,7 @@ export default function Cadastro() {
           {/* Link para a tela de login */}
           <p className="text-center text-sm text-gray-500 mt-3">
             Já tem uma conta?
-            <a
-              href="/paciente/entrar/login"
-              className="ml-2 text-blue-600 hover:underline"
-            >
+            <a href="/paciente/entrar/login" className="ml-2 text-blue-600 hover:underline">
               Faça login
             </a>
           </p>

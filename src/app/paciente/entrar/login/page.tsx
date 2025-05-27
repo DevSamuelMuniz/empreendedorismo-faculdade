@@ -27,12 +27,33 @@ export default function Login() {
       <div className="w-full md:w-1/2 flex flex-col justify-center items-center px-6">
         <h2 className="text-3xl font-bold text-blue-600 mb-2">Bem-vindo!</h2>
         <p className="text-blue-600 mb-4">Paciente</p>
-        <p className="text-gray-600 mb-4">Acesse sua conta para continuar</p>
 
+        <p className="text-center text-sm text-gray-500 mt-3">
+          SOU PROFISSIONAL
+          <a
+            href="/profissional/entrar/login"
+            className="ml-2 text-blue-600 hover:underline"
+          >
+            Fazer login
+          </a>
+        </p>
+
+        <p className="text-center text-sm text-gray-500 mt-3">
+          SOU ADMINISTRADOR
+          <a
+            href="/administrador/entrar/login"
+            className="ml-2 text-blue-600 hover:underline"
+          >
+            Fazer login
+          </a>
+        </p>
+
+        
         <form
           onSubmit={handleLogin}
           className="w-full max-w-sm bg-white p-6 rounded-lg shadow-md"
         >
+        <p className="text-gray-600 mb-4 text-center">Acesse sua conta para continuar</p>
           {/* Campo de e-mail */}
           <div className="mb-4">
             <label className="block text-gray-700">Seu email</label>

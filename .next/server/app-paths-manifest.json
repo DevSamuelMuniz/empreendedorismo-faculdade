@@ -1,6 +1,9 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/paciente/sistema/agendamento/page": "app/paciente/sistema/agendamento/page.js",
   "/paciente/sistema/consultas/page": "app/paciente/sistema/consultas/page.js",
-  "/paciente/sistema/historico/page": "app/paciente/sistema/historico/page.js"
+  "/paciente/sistema/historico/page": "app/paciente/sistema/historico/page.js",
+  "/paciente/sistema/inicio/page": "app/paciente/sistema/inicio/page.js",
+  "/paciente/sistema/perfil/page": "app/paciente/sistema/perfil/page.js"
 }

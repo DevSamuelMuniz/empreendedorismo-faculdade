@@ -1,8 +1,6 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/administrador/entrar/login/page": "app/administrador/entrar/login/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/paciente/entrar/login/page": "app/paciente/entrar/login/page.js",
-  "/page": "app/page.js",
-  "/profissional/entrar/login/page": "app/profissional/entrar/login/page.js"
+  "/paciente/sistema/consultas/page": "app/paciente/sistema/consultas/page.js",
+  "/paciente/sistema/historico/page": "app/paciente/sistema/historico/page.js"
 }

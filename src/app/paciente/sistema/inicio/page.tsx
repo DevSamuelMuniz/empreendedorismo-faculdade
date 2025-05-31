@@ -1,7 +1,6 @@
 "use client";
 
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "@/components/sistema/header/header";
 import Navbar from "@/components/sistema/navbar/navbar";
 import {
@@ -15,57 +14,63 @@ import {
   Select,
   FormControl,
   InputLabel,
-  List,
-  ListItem,
-  ListItemText,
-  Divider,
   Stack,
   Paper,
+  Grid,
 } from "@mui/material";
 
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
-
+import { Schedule } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Schedule } from "@mui/icons-material";
 
 const consultasMock = [
   {
     id: 1,
-    profissionalSaude: "João da Silva",
-    hospital: "UPA Lagoa Encantada" ,
+    profissionalSaude: "Dr. João da Silva",
+    hospital: "UPA Lagoa Encantada",
+    local: "Sala 03 - Bloco A",
+    tipoAtendimento: "Clínico Geral",
     data: "2025-04-10",
     hora: "14:00",
     status: "Agendada",
   },
   {
     id: 2,
-    profissionalSaude: "Maria Oliveira",
-    hospital: "UPA Lagoa Encantada" ,
+    profissionalSaude: "Dra. Maria Oliveira",
+    hospital: "UPA Lagoa Encantada",
+    local: "Sala 01 - Bloco B",
+    tipoAtendimento: "Pediatra",
     data: "2025-04-11",
     hora: "09:30",
     status: "Realizada",
   },
   {
     id: 3,
-    profissionalSaude: "Carlos Lima",
-    hospital: "UPA Lagoa Encantada" ,
+    profissionalSaude: "Dr. Carlos Lima",
+    hospital: "UPA Lagoa Encantada",
+    local: "Consultório 2",
+    tipoAtendimento: "Cardiologista",
     data: "2025-04-12",
     hora: "16:00",
     status: "Cancelada",
   },
   {
     id: 4,
-    profissionalSaude: "Carlos Lima",
-    hospital: "UPA Lagoa Encantada" ,
+    profissionalSaude: "Dr. João Lima",
+    hospital: "UPA Lagoa Encantada",
+    local: "Consultório 5",
+    tipoAtendimento: "Dermatologista",
     data: "2025-04-12",
     hora: "16:00",
     status: "Cancelada",
   },
   {
     id: 5,
-    profissionalSaude: "Carlos Lima",
-    hospital: "UPA Lagoa Encantada" ,
+    profissionalSaude: "Dr. Carlos Lima",
+    hospital: "UPA Lagoa Encantada",
+    local: "Consultório 4",
+    tipoAtendimento: "Ginecologista",
     data: "2025-04-12",
     hora: "16:00",
     status: "Cancelada",
@@ -91,7 +96,7 @@ export default function Dashboard() {
       setConsultas(consultasMock.filter((c) => c.status === filtroStatus));
     }
   }, [filtroStatus]);
-  
+
   return (
     <main className="min-h-screen bg-gray-100">
       <div className="flex w-full absolute">
@@ -107,11 +112,10 @@ export default function Dashboard() {
           color="text.secondary"
           gutterBottom
         >
-          <MedicalServicesIcon className="text-red-400" /> Olá, bem-vindo ao seu
-          espaço
+          <MedicalServicesIcon className="text-red-400" />
+          Olá, bem-vindo ao seu espaço
         </Typography>
 
-        {/* Consultas disponíveis */}
         <Paper elevation={3} className="p-4 mb-6">
           <Typography variant="h6" gutterBottom>
             Consultas Disponíveis
@@ -123,17 +127,8 @@ export default function Dashboard() {
           </Stack>
         </Paper>
 
-        {/* Cards de informação */}
-        <Stack
-          direction={{ xs: "column", md: "row" }}
-          spacing={3}
-          className="mb-6"
-        >
-          <Card
-            component={motion.div}
-            whileHover={{ scale: 1.03 }}
-            className="flex-1"
-          >
+        <Stack direction={{ xs: "column", md: "row" }} spacing={3} className="mb-6">
+          <Card component={motion.div} whileHover={{ scale: 1.03 }} className="flex-1">
             <CardContent>
               <Typography variant="h6">Minhas Consultas</Typography>
               <Typography variant="h4" color="primary">
@@ -142,11 +137,7 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
-          <Card
-            component={motion.div}
-            whileHover={{ scale: 1.03 }}
-            className="flex-1"
-          >
+          <Card component={motion.div} whileHover={{ scale: 1.03 }} className="flex-1">
             <CardContent>
               <Typography variant="h6">Consultas Realizadas</Typography>
               <Typography variant="h4" color="secondary">
@@ -155,11 +146,7 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
-          <Card
-            component={motion.div}
-            whileHover={{ scale: 1.03 }}
-            className="flex-1"
-          >
+          <Card component={motion.div} whileHover={{ scale: 1.03 }} className="flex-1">
             <CardContent>
               <Typography variant="h6">Histórico Total</Typography>
               <Typography variant="h4" color="success.main">
@@ -169,7 +156,6 @@ export default function Dashboard() {
           </Card>
         </Stack>
 
-        {/* Filtros e nova consulta */}
         <Box className="flex justify-between items-center mb-4 flex-wrap gap-4">
           <Typography variant="h5" fontWeight="medium">
             Suas Próximas Consultas
@@ -196,58 +182,89 @@ export default function Dashboard() {
           </Link>
         </Box>
 
-        {/* Consultas Futuras */}
-        <Stack spacing={2} className="mb-6">
+        <Grid container spacing={2} className="mb-6">
           {consultas.map((consulta) => (
-            <Card
-              key={consulta.id}
-              className="hover:shadow-xl transition duration-300"
-              component={motion.div}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-            >
-              <CardContent>
-                <Typography variant="subtitle1" fontWeight="bold">
-                  {consulta.profissionalSaude}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {consulta.data} às {consulta.hora}
-                </Typography>
-                <Chip
-                  label={consulta.status}
-                  className="mt-2"
-                  color={
-                    consulta.status === "Realizada"
-                      ? "success"
-                      : consulta.status === "Cancelada"
-                      ? "error"
-                      : "warning"
-                  }
-                />
-              </CardContent>
-            </Card>
+            <Grid item xs={12} sm={6} md={4} key={consulta.id}>
+              <Card
+                className="hover:shadow-xl transition duration-300 h-full"
+                component={motion.div}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+              >
+                <CardContent>
+                  <Typography variant="subtitle1" fontWeight="bold">
+                    {consulta.profissionalSaude}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {consulta.tipoAtendimento} - {consulta.hospital} - {consulta.local}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {consulta.data} às {consulta.hora}
+                  </Typography>
+                  <Chip
+                    label={consulta.status}
+                    className="mt-2"
+                    color={
+                      consulta.status === "Realizada"
+                        ? "success"
+                        : consulta.status === "Cancelada"
+                        ? "error"
+                        : "warning"
+                    }
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
           ))}
-        </Stack>
+        </Grid>
 
-        {/* Histórico Recente */}
         <Paper elevation={2} className="p-4">
           <Typography variant="h6" gutterBottom>
             Consultas Recentes
           </Typography>
-          <List>
+          <Grid container spacing={2}>
             {consultasMock.slice(0, 3).map((c) => (
-              <React.Fragment key={c.id}>
-                <ListItem>
-                  <ListItemText
-                    primary={`${c.profissionalSaude} - ${c.data} às ${c.hora}`}
-                    secondary={`Status: ${c.status}`}
-                  />
-                </ListItem>
-                <Divider />
-              </React.Fragment>
+              <Grid item xs={12} md={4} key={c.id}>
+                <Card
+                  component={motion.div}
+                  whileHover={{ scale: 1.03 }}
+                  className="h-full"
+                >
+                  <CardContent>
+                    <Typography
+                      variant="subtitle1"
+                      fontWeight="bold"
+                      gutterBottom
+                    >
+                      {c.profissionalSaude}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Tipo: {c.tipoAtendimento}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Hospital: {c.hospital}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Data: {c.data} às {c.hora}
+                    </Typography>
+                    <Chip
+                      label={c.status}
+                      className="mt-2"
+                      color={
+                        c.status === "Realizada"
+                          ? "success"
+                          : c.status === "Cancelada"
+                          ? "error"
+                          : "warning"
+                      }
+                      size="small"
+                    />
+                  </CardContent>
+                </Card>
+              </Grid>
             ))}
-          </List>
+          </Grid>
         </Paper>
       </Box>
     </main>

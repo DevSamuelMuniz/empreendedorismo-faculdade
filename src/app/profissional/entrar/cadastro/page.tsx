@@ -6,7 +6,7 @@ export default function Cadastro() {
     <main className="flex h-screen w-screen">
       {/* Lado esquerdo - Formulário */}
       <div className="w-full md:w-1/2 flex flex-col justify-center items-center px-6">
-        <h2 className="text-3xl font-bold text-blue-600 mb-6">
+        <h2 className="text-3xl font-bold text-blue-900 mb-6">
           Crie sua conta
         </h2>
         <p className="text-gray-600 mb-4">Cadastre-se para acessar o sistema</p>
@@ -16,7 +16,7 @@ export default function Cadastro() {
           <div className="mb-4">
             <label className="block text-gray-700">Nome completo</label>
             <input
-              className="w-full p-2 border border-gray-400 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 border border-gray-400 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-900"
               type="text"
               name="nomeCadastro"
               id="nomeCadastro"
@@ -28,7 +28,7 @@ export default function Cadastro() {
           <div className="mb-4">
             <label className="block text-gray-700">Seu email</label>
             <input
-              className="w-full p-2 border border-gray-400 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 border border-gray-400 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-900"
               type="email"
               name="emailCadastro"
               id="emailCadastro"
@@ -40,7 +40,7 @@ export default function Cadastro() {
           <div className="mb-4">
             <label className="block text-gray-700">Crie uma senha</label>
             <input
-              className="w-full p-2 border border-gray-400 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 border border-gray-400 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-900"
               type="password"
               name="senhaCadastro"
               id="senhaCadastro"
@@ -52,7 +52,7 @@ export default function Cadastro() {
           <div className="mb-4">
             <label className="block text-gray-700">Confirme sua senha</label>
             <input
-              className="w-full p-2 border border-gray-400 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 border border-gray-400 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-900"
               type="password"
               name="confirmaSenha"
               id="confirmaSenha"
@@ -62,7 +62,7 @@ export default function Cadastro() {
 
           {/* Botão de cadastro */}
           <button
-            className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition"
+            className="w-full bg-blue-900 text-white p-2 rounded hover:bg-blue-700 transition"
             type="submit"
           >
             Cadastrar
@@ -72,8 +72,8 @@ export default function Cadastro() {
           <p className="text-center text-sm text-gray-500 mt-3">
             Já tem uma conta?
             <a
-              href="/paciente/entrar/login"
-              className="ml-2 text-blue-600 hover:underline"
+              href="/profissional/entrar/login"
+              className="ml-2 text-blue-900 hover:underline"
             >
               Faça login
             </a>
@@ -82,7 +82,7 @@ export default function Cadastro() {
       </div>
 
       {/* Lado direito - Imagem */}
-      <div className="hidden md:flex w-1/2 bg-blue-500 items-center justify-center">
+      <div className="hidden md:flex w-1/2 bg-blue-900 items-center justify-center">
         <Image
           className="h-[80%] w-96 object-contain"
           src={Logo}

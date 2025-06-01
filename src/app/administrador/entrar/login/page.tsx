@@ -15,7 +15,7 @@ export default function Login() {
   return (
     <main className="flex h-screen w-screen">
       {/* Lado esquerdo - Imagem */}
-      <div className="hidden md:flex w-1/2 bg-red-500 items-center justify-center">
+      <div className="hidden md:flex w-1/2 bg-red-900 items-center justify-center">
         <Image
           className="h-[80%] w-96 object-contain"
           src={Logo}
@@ -25,8 +25,8 @@ export default function Login() {
 
       {/* Lado direito - Formulário */}
       <div className="w-full md:w-1/2 flex flex-col justify-center items-center px-6">
-        <h2 className="text-3xl font-bold text-red-600 mb-2">Bem-vindo!</h2>
-        <p className="text-red-600 mb-4">Administrador</p>
+        <h2 className="text-3xl font-bold text-red-900 mb-2">Bem-vindo!</h2>
+        <p className="text-red-900 mb-4">Administrador</p>
 
         <p className="text-center text-sm text-gray-500 mt-3">
           SOU PACIENTE
@@ -58,7 +58,7 @@ export default function Login() {
           <div className="mb-4">
             <label className="block text-gray-700">Seu email</label>
             <input
-              className="w-full p-2 border border-gray-400 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full p-2 border border-gray-400 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-red-900"
               type="email"
               name="emailLogin"
               id="emailLogin"
@@ -71,7 +71,7 @@ export default function Login() {
           <div className="mb-4">
             <label className="block text-gray-700">Sua senha</label>
             <input
-              className="w-full p-2 border border-gray-400 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full p-2 border border-gray-400 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-red-900"
               type="password"
               name="senhaLogin"
               id="senhaLogin"
@@ -82,7 +82,7 @@ export default function Login() {
 
           {/* Botão de login */}
           <button
-            className="w-full bg-red-600 text-white p-2 rounded hover:bg-red-700 transition cursor-pointer"
+            className="w-full bg-red-900 text-white p-2 rounded hover:bg-red-700 transition cursor-pointer"
             type="submit"
           >
             Entrar
@@ -93,7 +93,7 @@ export default function Login() {
             Ainda não tem uma conta?
             <a
               href="/paciente/entrar/cadastro"
-              className="ml-2 text-red-600 hover:underline"
+              className="ml-2 text-red-900 hover:underline"
             >
               Criar uma conta
             </a>
@@ -102,7 +102,7 @@ export default function Login() {
           {/* Link de recuperação de senha */}
           <p className="text-center text-sm text-gray-500 mt-3">
             Esqueceu a senha?
-            <a href="#" className="ml-2 text-red-600 hover:underline">
+            <a href="#" className="ml-2 text-red-900 hover:underline">
               Recuperar
             </a>
           </p>

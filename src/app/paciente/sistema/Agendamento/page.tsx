@@ -330,7 +330,7 @@ export default function AgendarConsulta() {
         {horarioSelecionado && (
           <Box>
             <Button variant="contained" color="primary" onClick={handleAgendar}>
-              Confirmar Agendamento
+              Solicitar Agendamento
             </Button>
           </Box>
         )}
@@ -342,7 +342,7 @@ export default function AgendarConsulta() {
         onClose={() => setSucesso(false)}
       >
         <Alert severity="success" onClose={() => setSucesso(false)}>
-          Agendamento realizado com sucesso!
+          Solicitação realizada com sucesso, aguarde retorno!
         </Alert>
       </Snackbar>
     </LocalizationProvider>

@@ -40,9 +40,12 @@ export default function Header() {
         <IconButton onClick={toggleDrawer(true)}>
           <NotificationsIcon className="text-blue-500" />
         </IconButton>
-        <IconButton>
-          <LogoutIcon className="text-blue-500" />
-        </IconButton>
+
+        <a href="/paciente/entrar/login">
+          <IconButton>
+            <LogoutIcon className="text-blue-500" />
+          </IconButton>
+        </a>
       </main>
 
       <Drawer

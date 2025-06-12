@@ -3,14 +3,30 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Logo from "@/assets/imgs/logo.png";
+import { useState } from "react";
+import axios from "axios";
 
 export default function Login() {
   const router = useRouter();
 
-  function handleLogin(event: React.FormEvent) {
-    event.preventDefault();
-    router.push("/paciente/sistema/inicio");
-  }
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post("http://localhost:8000/paciente/sistema/login", {
+        pa_email: email,
+        pa_senha: senha,
+      });
+
+      const token = response.data.access_token;
+      localStorage.setItem("token", token);
+
+      router.push("/paciente/sistema/inicio");
+    } catch (err: any) {
+      alert(err?.response?.data?.detail || "Erro ao fazer login");
+    }
+  };
 
   return (
     <main className="flex h-screen w-screen">
@@ -48,12 +64,17 @@ export default function Login() {
           </a>
         </p>
 
-        
         <form
-          onSubmit={handleLogin}
           className="w-full max-w-sm bg-white p-6 rounded-lg shadow-md"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleLogin();
+          }}
         >
-        <p className="text-gray-600 mb-4 text-center">Acesse sua conta para continuar</p>
+          <p className="text-gray-600 mb-4 text-center">
+            Acesse sua conta para continuar
+          </p>
+
           {/* Campo de e-mail */}
           <div className="mb-4">
             <label className="block text-gray-700">Seu email</label>
@@ -63,6 +84,8 @@ export default function Login() {
               name="emailLogin"
               id="emailLogin"
               placeholder="Digite seu email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -76,14 +99,16 @@ export default function Login() {
               name="senhaLogin"
               id="senhaLogin"
               placeholder="Digite sua senha"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
               required
             />
           </div>
 
           {/* Botão de login */}
           <button
-            className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition cursor-pointer"
             type="submit"
+            className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition cursor-pointer"
           >
             Entrar
           </button>

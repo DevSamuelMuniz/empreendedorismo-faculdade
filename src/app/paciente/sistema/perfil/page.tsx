@@ -1,16 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Button, TextField, Typography, Paper } from "@mui/material";
 import Navbar from "@/components/sistema/navbar/navbar";
 import Header from "@/components/sistema/header/header";
+import axios from "axios";
 
 export default function EditarPaciente() {
-  const [paciente, setPaciente] = useState({
+  const [pacienteOriginal, setPacienteOriginal] = useState<any>(null);
+  const [paciente, setPaciente] = useState<any>({
     nome: "",
     email: "",
     telefone: "",
-    cpf: "123.456.789-00",
+    cpf: "12345678900", // usado para buscar
     dataNascimento: "",
     endereco: {
       rua: "",
@@ -23,13 +25,42 @@ export default function EditarPaciente() {
     observacoes: "",
   });
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  useEffect(() => {
+    const fetchPaciente = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/paciente/${paciente.cpf}`);
+        const dados = response.data;
+
+        setPacienteOriginal(dados);
+        setPaciente((prev: any) => ({
+          ...prev,
+          nome: dados.pa_nome || "",
+          email: dados.pa_email || "",
+          telefone: dados.pa_telefone || "",
+          dataNascimento: dados.pa_data_nascimento || "",
+          endereco: {
+            rua: dados.pa_endereco_rua || "",
+            numero: dados.pa_endereco_numero || "",
+            bairro: dados.pa_endereco_bairro || "",
+            cidade: dados.pa_endereco_cidade || "",
+            estado: dados.pa_endereco_estado || "",
+            cep: dados.pa_endereco_cep || "",
+          },
+          observacoes: dados.pa_observacoes || "",
+        }));
+      } catch (error) {
+        console.error("Erro ao buscar dados do paciente", error);
+      }
+    };
+
+    fetchPaciente();
+  }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     if (name.startsWith("endereco.")) {
       const campoEndereco = name.split(".")[1];
-      setPaciente((prev) => ({
+      setPaciente((prev: any) => ({
         ...prev,
         endereco: {
           ...prev.endereco,
@@ -37,7 +68,7 @@ export default function EditarPaciente() {
         },
       }));
     } else {
-      setPaciente((prev) => ({ ...prev, [name]: value }));
+      setPaciente((prev: any) => ({ ...prev, [name]: value }));
     }
   };
 
@@ -55,13 +86,7 @@ export default function EditarPaciente() {
       </div>
 
       <Box className="pt-24 pl-64 pr-6 pb-10">
-        <Typography
-          className="flex items-center gap-3"
-          variant="h4"
-          fontWeight="bold"
-          color="text.secondary"
-          gutterBottom
-        >
+        <Typography variant="h4" fontWeight="bold" color="text.secondary" gutterBottom>
           Altere seus dados
         </Typography>
 
@@ -84,6 +109,7 @@ export default function EditarPaciente() {
               name="nome"
               value={paciente.nome}
               onChange={handleChange}
+              placeholder={pacienteOriginal?.pa_nome || ""}
               sx={{ gridColumn: "span 1" }}
             />
 
@@ -92,10 +118,11 @@ export default function EditarPaciente() {
               fullWidth
               required
               label="E-mail"
-              type="email"
               name="email"
+              type="email"
               value={paciente.email}
               onChange={handleChange}
+              placeholder={pacienteOriginal?.pa_email || ""}
               sx={{ gridColumn: "span 1" }}
             />
 
@@ -104,10 +131,11 @@ export default function EditarPaciente() {
               fullWidth
               required
               label="Telefone"
-              type="tel"
               name="telefone"
+              type="tel"
               value={paciente.telefone}
               onChange={handleChange}
+              placeholder={pacienteOriginal?.pa_telefone || ""}
               sx={{ gridColumn: "span 1" }}
             />
 
@@ -121,7 +149,7 @@ export default function EditarPaciente() {
               sx={{ gridColumn: "span 1" }}
             />
 
-            {/* Data Nascimento */}
+            {/* Data de nascimento */}
             <TextField
               fullWidth
               required
@@ -134,78 +162,76 @@ export default function EditarPaciente() {
               sx={{ gridColumn: "span 1" }}
             />
 
-            {/* Endereço - título (2 colunas) */}
             <Typography variant="h6" sx={{ gridColumn: "span 2" }}>
               Endereço
             </Typography>
 
-            {/* Rua */}
+            {/* Endereço: Rua */}
             <TextField
               fullWidth
-              required
               label="Rua"
               name="endereco.rua"
               value={paciente.endereco.rua}
               onChange={handleChange}
+              placeholder={pacienteOriginal?.pa_endereco_rua || ""}
               sx={{ gridColumn: "span 1" }}
             />
 
             {/* Número */}
             <TextField
               fullWidth
-              required
               label="Número"
               name="endereco.numero"
               value={paciente.endereco.numero}
               onChange={handleChange}
+              placeholder={pacienteOriginal?.pa_endereco_numero || ""}
               sx={{ gridColumn: "span 1" }}
             />
 
             {/* Bairro */}
             <TextField
               fullWidth
-              required
               label="Bairro"
               name="endereco.bairro"
               value={paciente.endereco.bairro}
               onChange={handleChange}
+              placeholder={pacienteOriginal?.pa_endereco_bairro || ""}
               sx={{ gridColumn: "span 1" }}
             />
 
             {/* Cidade */}
             <TextField
               fullWidth
-              required
               label="Cidade"
               name="endereco.cidade"
               value={paciente.endereco.cidade}
               onChange={handleChange}
+              placeholder={pacienteOriginal?.pa_endereco_cidade || ""}
               sx={{ gridColumn: "span 1" }}
             />
 
             {/* Estado */}
             <TextField
               fullWidth
-              required
               label="Estado"
               name="endereco.estado"
               value={paciente.endereco.estado}
               onChange={handleChange}
+              placeholder={pacienteOriginal?.pa_endereco_estado || ""}
               sx={{ gridColumn: "span 1" }}
             />
 
             {/* CEP */}
             <TextField
               fullWidth
-              required
               label="CEP"
               name="endereco.cep"
               value={paciente.endereco.cep}
               onChange={handleChange}
+              placeholder={pacienteOriginal?.pa_endereco_cep || ""}
               sx={{ gridColumn: "span 1" }}
             />
 
-            {/* Botão enviar (2 colunas) */}
             <Button
               type="submit"
               variant="contained"

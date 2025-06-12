@@ -41,7 +41,7 @@ export default function Login() {
         <p className="text-center text-sm text-gray-500 mt-3">
           SOU PROFISSIONAL
           <a
-            href="/administrador/entrar/login"
+            href="/profissional/entrar/login"
             className="ml-2 text-blue-600 hover:underline"
           >
             Fazer login

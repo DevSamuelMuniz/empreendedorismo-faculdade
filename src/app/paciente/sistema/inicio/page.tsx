@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Header from "@/components/sistema/header/header";
 import Navbar from "@/components/sistema/navbar/navbar";
 import {
@@ -18,84 +19,72 @@ import {
   Paper,
   Grid,
 } from "@mui/material";
-
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import { Schedule } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-const consultasMock = [
-  {
-    id: 1,
-    profissionalSaude: "Dr. João da Silva",
-    hospital: "UPA Lagoa Encantada",
-    local: "Sala 03 - Bloco A",
-    tipoAtendimento: "Clínico Geral",
-    data: "2025-04-10",
-    hora: "14:00",
-    status: "Agendada",
-  },
-  {
-    id: 2,
-    profissionalSaude: "Dra. Maria Oliveira",
-    hospital: "UPA Lagoa Encantada",
-    local: "Sala 01 - Bloco B",
-    tipoAtendimento: "Pediatra",
-    data: "2025-04-11",
-    hora: "09:30",
-    status: "Realizada",
-  },
-  {
-    id: 3,
-    profissionalSaude: "Dr. Carlos Lima",
-    hospital: "UPA Lagoa Encantada",
-    local: "Consultório 2",
-    tipoAtendimento: "Cardiologista",
-    data: "2025-04-12",
-    hora: "16:00",
-    status: "Cancelada",
-  },
-  {
-    id: 4,
-    profissionalSaude: "Dr. João Lima",
-    hospital: "UPA Lagoa Encantada",
-    local: "Consultório 5",
-    tipoAtendimento: "Dermatologista",
-    data: "2025-04-12",
-    hora: "16:00",
-    status: "Cancelada",
-  },
-  {
-    id: 5,
-    profissionalSaude: "Dr. Carlos Lima",
-    hospital: "UPA Lagoa Encantada",
-    local: "Consultório 4",
-    tipoAtendimento: "Ginecologista",
-    data: "2025-04-12",
-    hora: "16:00",
-    status: "Cancelada",
-  },
-];
-
-const consultasDisponiveis = [
-  "Clínico Geral",
-  "Pediatra",
-  "Cardiologista",
-  "Dermatologista",
-  "Ginecologista",
-];
+interface Consulta {
+  id: number;
+  profissionalSaude: string;
+  hospital: string;
+  local: string;
+  tipoAtendimento: string;
+  data: string;
+  hora: string;
+  status: "Agendada" | "Realizada" | "Cancelada";
+}
 
 export default function Dashboard() {
-  const [consultas, setConsultas] = useState(consultasMock);
+  const [consultasTodas, setConsultasTodas] = useState<Consulta[]>([]);
+  const [consultasFiltradas, setConsultasFiltradas] = useState<Consulta[]>([]);
   const [filtroStatus, setFiltroStatus] = useState("Todos");
+
+  const statusLabels: Record<string, "Agendada" | "Realizada" | "Cancelada"> = {
+    pendente: "Agendada",
+    concluido: "Realizada",
+    cancelada: "Cancelada",
+  };
+
+  const corStatus: Record<string, "success" | "error" | "warning" | "default"> = {
+    Realizada: "success",
+    Cancelada: "error",
+    Agendada: "warning",
+  };
+
+  const fetchConsultas = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/agendamentos");
+
+      const formatadas: Consulta[] = response.data.map((ag: any) => ({
+        id: ag.id_agendamento,
+        profissionalSaude: ag.nome_profissional,
+        hospital: ag.nome_unidade,
+        local: ag.endereco_unidade || "Sala não informada",
+        tipoAtendimento: ag.observacoes || "Não informado",
+        data: ag.data_consulta,
+        hora: ag.hora_consulta,
+        status: statusLabels[ag.status] || "Agendada",
+      }));
+
+      setConsultasTodas(formatadas);
+      setConsultasFiltradas(formatadas);
+    } catch (err) {
+      console.error("Erro ao buscar agendamentos", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchConsultas();
+  }, []);
 
   useEffect(() => {
     if (filtroStatus === "Todos") {
-      setConsultas(consultasMock);
+      setConsultasFiltradas(consultasTodas);
     } else {
-      setConsultas(consultasMock.filter((c) => c.status === filtroStatus));
+      setConsultasFiltradas(consultasTodas.filter((c) => c.status === filtroStatus));
     }
-  }, [filtroStatus]);
+  }, [filtroStatus, consultasTodas]);
 
   return (
     <main className="min-h-screen bg-gray-100">
@@ -121,7 +110,7 @@ export default function Dashboard() {
             Consultas Disponíveis
           </Typography>
           <Stack direction="row" spacing={2} flexWrap="wrap">
-            {consultasDisponiveis.map((tipo, index) => (
+            {["Clínico Geral", "Pediatra", "Cardiologista", "Dermatologista", "Ginecologista"].map((tipo, index) => (
               <Chip key={index} label={tipo} variant="outlined" clickable />
             ))}
           </Stack>
@@ -130,27 +119,27 @@ export default function Dashboard() {
         <Stack direction={{ xs: "column", md: "row" }} spacing={3} className="mb-6">
           <Card component={motion.div} whileHover={{ scale: 1.03 }} className="flex-1">
             <CardContent>
-              <Typography variant="h6">Minhas Consultas</Typography>
+              <Typography variant="h6">Total de Consultas</Typography>
               <Typography variant="h4" color="primary">
-                12
+                {consultasTodas.length}
               </Typography>
             </CardContent>
           </Card>
 
           <Card component={motion.div} whileHover={{ scale: 1.03 }} className="flex-1">
             <CardContent>
-              <Typography variant="h6">Consultas Realizadas</Typography>
+              <Typography variant="h6">Realizadas</Typography>
               <Typography variant="h4" color="secondary">
-                6
+                {consultasTodas.filter((c) => c.status === "Realizada").length}
               </Typography>
             </CardContent>
           </Card>
 
           <Card component={motion.div} whileHover={{ scale: 1.03 }} className="flex-1">
             <CardContent>
-              <Typography variant="h6">Histórico Total</Typography>
+              <Typography variant="h6">Histórico</Typography>
               <Typography variant="h4" color="success.main">
-                20
+                {consultasTodas.length}
               </Typography>
             </CardContent>
           </Card>
@@ -158,7 +147,7 @@ export default function Dashboard() {
 
         <Box className="flex justify-between items-center mb-4 flex-wrap gap-4">
           <Typography variant="h5" fontWeight="medium">
-            Suas Próximas Consultas
+            Consultas Registradas
           </Typography>
 
           <FormControl variant="outlined" size="small">
@@ -175,7 +164,7 @@ export default function Dashboard() {
             </Select>
           </FormControl>
 
-          <Link href="/sistema/Agendamento">
+          <Link href="/paciente/sistema/agendamento">
             <Button variant="contained" startIcon={<Schedule />}>
               Nova Consulta
             </Button>
@@ -183,7 +172,7 @@ export default function Dashboard() {
         </Box>
 
         <Grid container spacing={2} className="mb-6">
-          {consultas.map((consulta) => (
+          {consultasFiltradas.map((consulta) => (
             <Grid item xs={12} sm={6} md={4} key={consulta.id}>
               <Card
                 className="hover:shadow-xl transition duration-300 h-full"
@@ -205,13 +194,7 @@ export default function Dashboard() {
                   <Chip
                     label={consulta.status}
                     className="mt-2"
-                    color={
-                      consulta.status === "Realizada"
-                        ? "success"
-                        : consulta.status === "Cancelada"
-                        ? "error"
-                        : "warning"
-                    }
+                    color={corStatus[consulta.status] || "default"}
                   />
                 </CardContent>
               </Card>
@@ -224,19 +207,11 @@ export default function Dashboard() {
             Consultas Recentes
           </Typography>
           <Grid container spacing={2}>
-            {consultasMock.slice(0, 3).map((c) => (
+            {consultasFiltradas.slice(0, 3).map((c) => (
               <Grid item xs={12} md={4} key={c.id}>
-                <Card
-                  component={motion.div}
-                  whileHover={{ scale: 1.03 }}
-                  className="h-full"
-                >
+                <Card component={motion.div} whileHover={{ scale: 1.03 }} className="h-full">
                   <CardContent>
-                    <Typography
-                      variant="subtitle1"
-                      fontWeight="bold"
-                      gutterBottom
-                    >
+                    <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
                       {c.profissionalSaude}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
@@ -251,13 +226,7 @@ export default function Dashboard() {
                     <Chip
                       label={c.status}
                       className="mt-2"
-                      color={
-                        c.status === "Realizada"
-                          ? "success"
-                          : c.status === "Cancelada"
-                          ? "error"
-                          : "warning"
-                      }
+                      color={corStatus[c.status] || "default"}
                       size="small"
                     />
                   </CardContent>

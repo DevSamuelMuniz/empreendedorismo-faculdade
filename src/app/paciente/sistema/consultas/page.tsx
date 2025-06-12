@@ -9,7 +9,6 @@ import {
   Select,
   MenuItem,
   InputLabel,
-  Link,
   Button,
   Dialog,
   DialogTitle,
@@ -17,79 +16,77 @@ import {
   DialogActions,
   IconButton,
   Chip,
+  Typography,
 } from "@mui/material";
 import { Schedule, Close } from "@mui/icons-material";
+import Link from "next/link";
+import axios from "axios";
 
-const consultasMock = [
-  {
-    id: 1,
-    profissional: "Dr. João da Silva",
-    especialidade: "Cardiologia",
-    hospital: "Hospital Coração Recife",
-    paciente: "Samuel Muniz",
-    endereco: "Av. Agamenon Magalhães, 1234 - Recife, PE",
-    latitude: -8.047562,
-    longitude: -34.876964,
-    data: "10/04/2025",
-    hora: "14:00",
-    status: "Agendada",
-  },
-  {
-    id: 2,
-    profissional: "Dra. Marina Costa",
-    especialidade: "Dermatologia",
-    hospital: "Clínica Pele Viva",
-    paciente: "Lucas Lima",
-    endereco: "Rua das Flores, 120 - Recife, PE",
-    latitude: -8.054378,
-    longitude: -34.887432,
-    data: "15/04/2025",
-    hora: "09:30",
-    status: "Realizada",
-  },
-  {
-    id: 3,
-    profissional: "Dr. Ricardo Nunes",
-    especialidade: "Neurologia",
-    hospital: "NeuroCentro Recife",
-    paciente: "Carla Dias",
-    endereco: "Av. Rui Barbosa, 789 - Recife, PE",
-    latitude: -8.042001,
-    longitude: -34.907281,
-    data: "18/04/2025",
-    hora: "16:00",
-    status: "Cancelada",
-  },
-  {
-    id: 4,
-    profissional: "Dra. Ana Beatriz",
-    especialidade: "Pediatria",
-    hospital: "Hospital Infantil Recife",
-    paciente: "Pedro Henrique",
-    endereco: "Av. Norte Miguel Arraes, 345 - Recife, PE",
-    latitude: -8.040112,
-    longitude: -34.920144,
-    data: "20/04/2025",
-    hora: "10:00",
-    status: "Agendada",
-  },
-];
+interface Consulta {
+  id: number;
+  profissional: string;
+  especialidade: string;
+  hospital: string;
+  paciente: string;
+  endereco: string;
+  latitude: number;
+  longitude: number;
+  data: string;
+  hora: string;
+  status: string;
+}
 
 export default function Consultas() {
-  const [consultas, setConsultas] = useState(consultasMock);
+  const [consultas, setConsultas] = useState<Consulta[]>([]);
   const [filtroStatus, setFiltroStatus] = useState("Todos");
   const [openModal, setOpenModal] = useState(false);
-  const [consultaSelecionada, setConsultaSelecionada] = useState<any>(null);
+  const [consultaSelecionada, setConsultaSelecionada] = useState<Consulta | null>(null);
+
+  const statusLabels: Record<string, string> = {
+    pendente: "Agendada",
+    concluido: "Realizada",
+    cancelada: "Cancelada",
+  };
+
+  const corStatus: Record<string, any> = {
+    Realizada: "success",
+    Cancelada: "error",
+    Agendada: "warning",
+  };
+
+  const fetchConsultas = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/agendamentos");
+
+      const formatadas: Consulta[] = response.data.map((ag: any) => ({
+        id: ag.id_agendamento,
+        profissional: ag.nome_profissional,
+        especialidade: ag.tipo_consulta,
+        hospital: ag.nome_unidade,
+        paciente: ag.nome_paciente,
+        endereco: ag.endereco_unidade,
+        latitude: ag.latitude,
+        longitude: ag.longitude,
+        data: ag.data_consulta,
+        hora: ag.hora_consulta,
+        status: statusLabels[ag.status] || ag.status,
+      }));
+
+      setConsultas(formatadas);
+    } catch (err) {
+      console.error("Erro ao buscar consultas:", err);
+    }
+  };
 
   useEffect(() => {
-    if (filtroStatus === "Todos") {
-      setConsultas(consultasMock);
-    } else {
-      setConsultas(consultasMock.filter((c) => c.status === filtroStatus));
-    }
-  }, [filtroStatus]);
+    fetchConsultas();
+  }, []);
 
-  const openDetalhes = (consulta: any) => {
+  const consultasFiltradas = filtroStatus === "Todos"
+    ? consultas
+    : consultas.filter((c) => c.status === filtroStatus);
+
+  const openDetalhes = (consulta: Consulta) => {
     setConsultaSelecionada(consulta);
     setOpenModal(true);
   };
@@ -97,14 +94,6 @@ export default function Consultas() {
   const closeModal = () => {
     setConsultaSelecionada(null);
     setOpenModal(false);
-  };
-
-  const confirmarCancelamento = () => {
-    const atualizadas = consultas.map((c) =>
-      c.id === consultaSelecionada.id ? { ...c, status: "Cancelada" } : c
-    );
-    setConsultas(atualizadas);
-    closeModal();
   };
 
   return (
@@ -115,9 +104,7 @@ export default function Consultas() {
       </div>
 
       <div className="pt-24 pl-64 pr-6 pb-10">
-        <h1 className="text-2xl font-bold text-gray-700 mb-4">
-          Suas consultas
-        </h1>
+        <h1 className="text-2xl font-bold text-gray-700 mb-4">Consultas Agendadas</h1>
 
         <div className="flex justify-between items-center flex-wrap gap-4 mb-6">
           <FormControl variant="outlined" size="small">
@@ -134,7 +121,7 @@ export default function Consultas() {
             </Select>
           </FormControl>
 
-          <Link href="/sistema/Agendamento">
+          <Link href="/paciente/sistema/agendamento">
             <Button variant="contained" startIcon={<Schedule />}>
               Nova Consulta
             </Button>
@@ -142,7 +129,7 @@ export default function Consultas() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {consultas.map((consulta) => (
+          {consultasFiltradas.map((consulta) => (
             <motion.div
               key={consulta.id}
               initial={{ opacity: 0, y: 20 }}
@@ -161,13 +148,7 @@ export default function Consultas() {
               <Chip
                 className="mt-2"
                 label={consulta.status}
-                color={
-                  consulta.status === "Realizada"
-                    ? "success"
-                    : consulta.status === "Cancelada"
-                    ? "error"
-                    : "warning"
-                }
+                color={corStatus[consulta.status] || "default"}
               />
             </motion.div>
           ))}
@@ -189,86 +170,60 @@ export default function Consultas() {
         </DialogTitle>
 
         <DialogContent dividers>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h3 className="text-lg font-bold mb-2">Informações Gerais</h3>
-              <p>
-                <strong>Médico:</strong> {consultaSelecionada?.profissional}
-              </p>
-              <p>
-                <strong>Especialidade:</strong>{" "}
-                {consultaSelecionada?.especialidade}
-              </p>
-              <p>
-                <strong>Paciente:</strong> {consultaSelecionada?.paciente}
-              </p>
-              <p>
-                <strong>Hospital:</strong> {consultaSelecionada?.hospital}
-              </p>
-              <p>
-                <strong>Endereço:</strong> {consultaSelecionada?.endereco}
-              </p>
+          {consultaSelecionada && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <Typography variant="h6">Informações</Typography>
+                <p><strong>Médico:</strong> {consultaSelecionada.profissional}</p>
+                <p><strong>Especialidade:</strong> {consultaSelecionada.especialidade}</p>
+                <p><strong>Paciente:</strong> {consultaSelecionada.paciente}</p>
+                <p><strong>Hospital:</strong> {consultaSelecionada.hospital}</p>
+                <p><strong>Endereço:</strong> {consultaSelecionada.endereco}</p>
 
-              <div className="mt-4">
-                <h3 className="text-lg font-bold mb-2">Horário</h3>
-                <p>
-                  <strong>Data:</strong> {consultaSelecionada?.data}
+                <div className="mt-4">
+                  <Typography variant="h6">Horário</Typography>
+                  <p><strong>Data:</strong> {consultaSelecionada.data}</p>
+                  <p><strong>Hora:</strong> {consultaSelecionada.hora}</p>
+                  <Chip
+                    label={consultaSelecionada.status}
+                    className="mt-2"
+                    color={corStatus[consultaSelecionada.status] || "default"}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <Typography variant="h6" className="mb-2">Localização</Typography>
+                <iframe
+                  src={`https://maps.google.com/maps?q=${consultaSelecionada.latitude},${consultaSelecionada.longitude}&z=15&output=embed`}
+                  width="100%"
+                  height="250"
+                  style={{ borderRadius: 8 }}
+                  loading="lazy"
+                ></iframe>
+
+                <p className="mt-2 text-sm text-gray-600">
+                  Chegue com 15 minutos de antecedência. Leve documentos e exames anteriores.
                 </p>
-                <p>
-                  <strong>Hora:</strong> {consultaSelecionada?.hora}
-                </p>
-                <Chip
-                  label={consultaSelecionada?.status}
-                  className="mt-2"
-                  color={
-                    consultaSelecionada?.status === "Realizada"
-                      ? "success"
-                      : consultaSelecionada?.status === "Cancelada"
-                      ? "error"
-                      : "warning"
-                  }
-                />
+
+                <Button
+                  variant="outlined"
+                  className="mt-4"
+                  href={`https://www.google.com/maps/search/?api=1&query=${consultaSelecionada.latitude},${consultaSelecionada.longitude}`}
+                  target="_blank"
+                >
+                  Abrir no Google Maps
+                </Button>
               </div>
             </div>
-
-            <div>
-              <h3 className="text-lg font-bold mb-2">Localização</h3>
-              <iframe
-                src={`https://maps.google.com/maps?q=${consultaSelecionada?.latitude},${consultaSelecionada?.longitude}&z=15&output=embed`}
-                width="100%"
-                height="250"
-                style={{ borderRadius: 8 }}
-                loading="lazy"
-              ></iframe>
-
-              <p className="mt-2 text-sm text-gray-600">
-                Chegue com 15 minutos de antecedência. Traga seus documentos e
-                exames anteriores.
-              </p>
-
-              <Button
-                variant="outlined"
-                className="mt-4"
-                href={`https://www.google.com/maps/search/?api=1&query=${consultaSelecionada?.latitude},${consultaSelecionada?.longitude}`}
-                target="_blank"
-              >
-                Abrir no Google Maps
-              </Button>
-            </div>
-          </div>
+          )}
         </DialogContent>
 
-        {consultaSelecionada?.status === "Agendada" && (
-          <DialogActions>
-            <Button
-              onClick={confirmarCancelamento}
-              color="error"
-              variant="contained"
-            >
-              Cancelar Consulta
-            </Button>
-          </DialogActions>
-        )}
+        <DialogActions>
+          <Button onClick={closeModal} color="primary">
+            Fechar
+          </Button>
+        </DialogActions>
       </Dialog>
     </main>
   );
